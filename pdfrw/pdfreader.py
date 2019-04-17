@@ -207,6 +207,7 @@ class PdfReader(PdfDict):
                     fdata.find(fdata[offset2 - 1] + objheader, offset2) > 0):
                 source.warning("Expected indirect object '%s'", objheader)
                 return None
+            self.private.header_warning = True
             source.warning("Indirect object %s found at incorrect "
                            "offset %d (expected offset %d)",
                            objheader, offset2, offset)
@@ -551,6 +552,7 @@ class PdfReader(PdfDict):
     def __init__(self, fname=None, fdata=None, decompress=False,
                  decrypt=False, password='', disable_gc=True, verbose=True):
         self.private.verbose = verbose
+        self.private.header_warning = False
 
         # Runs a lot faster with GC off.
         disable_gc = disable_gc and gc.isenabled()
